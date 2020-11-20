@@ -19,9 +19,13 @@ namespace LabEditor
         public Pen currentPen;
         bool drawing;
         int historyCount;
-       public Color historyColor;
+        public Color historyColor;
         List<Image> History;
         Timer cyclee;
+        Point first, second;
+        bool fig1;
+        Graphics g;
+        bool figDrw;
         public Form1()
         {
             InitializeComponent();
@@ -35,6 +39,9 @@ namespace LabEditor
             History = new List<Image>(); //initialize history list  
             cyclee = new Timer();
             cyclee.Start();
+            fig1 = false;
+            figDrw = false;
+            
         }
 
         private void PicDrawingSurf_MouseMove(object sender, MouseEventArgs e)
@@ -43,15 +50,28 @@ namespace LabEditor
             label1.Text = e.X.ToString() + ", " + e.Y.ToString();
             if (drawing)
             {
-                 Graphics g = Graphics.FromImage(picDrawingSurf.Image);
+                 g = Graphics.FromImage(picDrawingSurf.Image);
 
-                
+
 
                 currentPath.AddLine(oldLocation, e.Location);
                 g.DrawPath(currentPen, currentPath);
                 oldLocation = e.Location;
                 g.Dispose();
                 picDrawingSurf.Invalidate();
+            }
+            if (fig1)
+            {
+                if(figDrw)
+                {
+                    second = new Point(e.X, e.Y);
+                    Size s = new Size(second.X - first.X, second.Y - first.Y);
+                    Rectangle rect = new Rectangle(first, s);
+                    currentPen.Color = historyColor;
+                    g.DrawRectangle(currentPen, rect);
+                }
+                
+
             }
         }
 
@@ -63,26 +83,37 @@ namespace LabEditor
             if (historyCount + 1 < 10) historyCount++;
             if (History.Count - 1 == 10) History.RemoveAt(0);
             drawing = false;
-           
+
             try
             {
+                currentPath = new GraphicsPath();
                 currentPath.Dispose();
             }
             catch { };
-            
+
             currentPen.Color = historyColor;
+            if (fig1)
+            {
+                figDrw = false;
+                second = new Point(e.X, e.Y);
+                Size s = new Size(second.X - first.X, second.Y - first.Y);
+                Rectangle rect = new Rectangle(first, s);
+                currentPen.Color = historyColor;
+                g.DrawRectangle(currentPen, rect);
+                
+            }
         }
 
         private void PicDrawingSurf_MouseDown(object sender, MouseEventArgs e)
         {
-            if(picDrawingSurf.Image==null)
+            if (picDrawingSurf.Image == null)
             {
-                MessageBox.Show("Create new file first!");
+                MessageBox.Show("Create new file first!", "Error");
                 return;
             }
-            if(e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Left)
             {
-                if(randColors.Checked == true)
+                if (randColors.Checked == true)
                 {
                     drawing = true;
                     oldLocation = e.Location;
@@ -90,14 +121,22 @@ namespace LabEditor
                     cyclee.Enabled = true;
 
                 }
+                if (fig1)
+                {
+                    first = new Point(e.X, e.Y);
+                    figDrw = true;
+                }
+
+
+
                 else
                 {
                     drawing = true;
                     oldLocation = e.Location;
                     currentPath = new GraphicsPath();
                 }
-                
-                
+
+
             }
             else if (e.Button == MouseButtons.Right)
             {
@@ -118,7 +157,7 @@ namespace LabEditor
                     oldLocation = e.Location;
                     currentPath = new GraphicsPath();
                 }
-                
+
 
             }
         }
@@ -128,10 +167,10 @@ namespace LabEditor
             History.Clear();
             historyCount = 0;
             Bitmap pic = new Bitmap(493, 337);
-            
+
             picDrawingSurf.Image = pic;
             History.Add(new Bitmap(picDrawingSurf.Image));
-            
+
             if (picDrawingSurf.Image != null) //check before closing or creating new file
             {
                 var result = MessageBox.Show("Save image before closing?", "Warning", MessageBoxButtons.YesNoCancel);
@@ -184,15 +223,19 @@ namespace LabEditor
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
             OpenFileDialog OP = new OpenFileDialog();
             OP.Filter = "JPEG Image|*.jpg|Bitmap Image|*.bmp|GIF Image|*.gif|PNG Image|*.png";
             OP.Title = "Open an Image File";
             OP.FilterIndex = 1;
 
             if (OP.ShowDialog() != DialogResult.Cancel)
+            {
+                picDrawingSurf.Image = new Bitmap(OP.FileName);
+                History.Add(new Bitmap(OP.FileName));
 
-                picDrawingSurf.Load(OP.FileName);
-            picDrawingSurf.AutoSize = true;
+            }
+
 
         }
 
@@ -203,14 +246,20 @@ namespace LabEditor
                 var result = MessageBox.Show("Save image before closing?", "Warning", MessageBoxButtons.YesNoCancel);
                 switch (result)
                 {
-                    case DialogResult.No: //if no, then nothing happens
+                    case DialogResult.No: //if no, then nothing happens, app proceeds to close
+                        Application.Exit();
                         break;
                     case DialogResult.Yes: //if yes, then this sends us to the saving method
                         saveToolStripMenuItem_Click(sender, e);
+                        Application.Exit();
                         break;
                     case DialogResult.Cancel: //if cancel, then this just returns user to his masterpiece
                         return;
                 }
+            }
+            else
+            {
+                Application.Exit();
             }
         }
 
@@ -231,7 +280,7 @@ namespace LabEditor
 
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
-            exitToolStripMenuItem_Click(sender, e);
+            colorToolStripMenuItem_Click(sender, e);
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
@@ -245,7 +294,7 @@ namespace LabEditor
             {
                 picDrawingSurf.Image = new Bitmap(History[--historyCount]);
             }
-            else MessageBox.Show("Nothing to undo");
+            else MessageBox.Show("Nothing to undo", "Error");
         }
 
         private void redoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -253,8 +302,8 @@ namespace LabEditor
             if (historyCount < History.Count - 1)
             {
                 picDrawingSurf.Image = new Bitmap(History[++historyCount]);
-          }
-            else MessageBox.Show("Nothing to redo");
+            }
+            else MessageBox.Show("Nothing to redo", "Error");
         }
 
         private void solidToolStripMenuItem_Click(object sender, EventArgs e)
@@ -280,7 +329,7 @@ namespace LabEditor
             dotToolStripMenuItem.Checked = false;
             dashDotDotToolStripMenuItem.Checked = true;
         }
-        
+
         private void colorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorPicking f = new ColorPicking();
@@ -295,10 +344,10 @@ namespace LabEditor
                 cyclee.Interval = 400;
                 cyclee.Enabled = true;
                 cyclee.Tick += Cyclee_Tick;
-               
+
 
             }
-            if(randColors.Checked == false)
+            if (randColors.Checked == false)
             {
                 cyclee.Enabled = false;
 
@@ -310,8 +359,23 @@ namespace LabEditor
             Random rainboow = new Random();
             currentPen.Color = Color.FromArgb(rainboow.Next(255), rainboow.Next(255), rainboow.Next(255));
             historyColor = currentPen.Color;
-            currentPath = new GraphicsPath(); 
-           
+            currentPath = new GraphicsPath();
+
+        }
+
+        private void toolStripButton5_Click(object sender, EventArgs e)
+        {
+            exitToolStripMenuItem_Click(sender, e);
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("To use, create new file or open one. LMB to draw, RMB to erase.", "Info");
+        }
+
+        private void triangleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fig1 = true;
         }
     }
 }
