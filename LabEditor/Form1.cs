@@ -22,7 +22,6 @@ namespace LabEditor
         public Color historyColor;
         List<Image> History;
         Timer cyclee;
-        Point first, second;
         public Graphics g;
         int X = 0;
         int Y = 0;
@@ -55,9 +54,6 @@ namespace LabEditor
                 if(figure == 0)
                 {
                     g = Graphics.FromImage(picDrawingSurf.Image);
-
-
-
                     currentPath.AddLine(oldLocation, e.Location);
                     g.DrawPath(currentPen, currentPath);
                     oldLocation = e.Location;
@@ -87,6 +83,9 @@ namespace LabEditor
                 g.Dispose();
                 picDrawingSurf.Invalidate();
             }
+
+            
+
             if(figure == 2) //drawing circle
             {
                 Graphics g = Graphics.FromImage(picDrawingSurf.Image);
@@ -98,13 +97,8 @@ namespace LabEditor
             }
             if(figure == 0)
             {
-                Graphics g = Graphics.FromImage(picDrawingSurf.Image);
-                Rectangle pathRect = new Rectangle(X, Y, X0, Y);
-                currentPath.AddRectangle(pathRect);
-                g.DrawPath(currentPen, currentPath);
-                oldLocation = e.Location;
-                g.Dispose();
-                picDrawingSurf.Invalidate();
+                currentPath = new GraphicsPath();
+                currentPath.Dispose();
             }
 
 

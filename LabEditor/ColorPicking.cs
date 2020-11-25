@@ -120,5 +120,10 @@ namespace LabEditor
         private void mixedColor_BackColorChanged(object sender, EventArgs e)
         {
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
