@@ -47,6 +47,7 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.figuresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.triangleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.picDrawingSurf = new System.Windows.Forms.PictureBox();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.label1 = new System.Windows.Forms.Label();
@@ -55,14 +56,18 @@
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.randColors = new System.Windows.Forms.CheckBox();
-            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
-            this.triangleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.circleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.noneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.randFreq = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picDrawingSurf)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.randFreq)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -92,28 +97,28 @@
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.newToolStripMenuItem.Text = "New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -204,17 +209,26 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // figuresToolStripMenuItem
             // 
             this.figuresToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.triangleToolStripMenuItem});
+            this.triangleToolStripMenuItem,
+            this.circleToolStripMenuItem,
+            this.noneToolStripMenuItem});
             this.figuresToolStripMenuItem.Name = "figuresToolStripMenuItem";
             this.figuresToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.figuresToolStripMenuItem.Text = "Figures";
+            // 
+            // triangleToolStripMenuItem
+            // 
+            this.triangleToolStripMenuItem.Name = "triangleToolStripMenuItem";
+            this.triangleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.triangleToolStripMenuItem.Text = "Square";
+            this.triangleToolStripMenuItem.Click += new System.EventHandler(this.triangleToolStripMenuItem_Click);
             // 
             // picDrawingSurf
             // 
@@ -224,7 +238,6 @@
             this.picDrawingSurf.Size = new System.Drawing.Size(513, 337);
             this.picDrawingSurf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.picDrawingSurf.TabIndex = 1;
-            g = this.picDrawingSurf.CreateGraphics();
             this.picDrawingSurf.TabStop = false;
             // 
             // trackBar1
@@ -323,6 +336,20 @@
             this.toolStripButton4.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
             this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
             // 
+            // toolStripButton5
+            // 
+            this.toolStripButton5.AutoSize = false;
+            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
+            this.toolStripButton5.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton5.Margin = new System.Windows.Forms.Padding(5);
+            this.toolStripButton5.Name = "toolStripButton5";
+            this.toolStripButton5.Size = new System.Drawing.Size(68, 68);
+            this.toolStripButton5.Text = "Exit";
+            this.toolStripButton5.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
+            this.toolStripButton5.Click += new System.EventHandler(this.toolStripButton5_Click);
+            // 
             // panel1
             // 
             this.panel1.Location = new System.Drawing.Point(246, 27);
@@ -341,32 +368,63 @@
             this.randColors.UseVisualStyleBackColor = true;
             this.randColors.CheckedChanged += new System.EventHandler(this.randColors_CheckedChanged);
             // 
-            // toolStripButton5
+            // circleToolStripMenuItem
             // 
-            this.toolStripButton5.AutoSize = false;
-            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
-            this.toolStripButton5.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton5.Margin = new System.Windows.Forms.Padding(5);
-            this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(68, 68);
-            this.toolStripButton5.Text = "Exit";
-            this.toolStripButton5.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
-            this.toolStripButton5.Click += new System.EventHandler(this.toolStripButton5_Click);
+            this.circleToolStripMenuItem.Name = "circleToolStripMenuItem";
+            this.circleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.circleToolStripMenuItem.Text = "Circle";
+            this.circleToolStripMenuItem.Click += new System.EventHandler(this.circleToolStripMenuItem_Click);
             // 
-            // triangleToolStripMenuItem
+            // noneToolStripMenuItem
             // 
-            this.triangleToolStripMenuItem.Name = "triangleToolStripMenuItem";
-            this.triangleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.triangleToolStripMenuItem.Text = "Triangle";
-            this.triangleToolStripMenuItem.Click += new System.EventHandler(this.triangleToolStripMenuItem_Click);
+            this.noneToolStripMenuItem.Name = "noneToolStripMenuItem";
+            this.noneToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.noneToolStripMenuItem.Text = "None";
+            this.noneToolStripMenuItem.Click += new System.EventHandler(this.noneToolStripMenuItem_Click);
+            // 
+            // randFreq
+            // 
+            this.randFreq.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.randFreq.Location = new System.Drawing.Point(370, 419);
+            this.randFreq.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.randFreq.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.randFreq.Name = "randFreq";
+            this.randFreq.Size = new System.Drawing.Size(97, 20);
+            this.randFreq.TabIndex = 7;
+            this.randFreq.Value = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(245, 421);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(119, 13);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Randomness frequency";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.randFreq);
             this.Controls.Add(this.randColors);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.label1);
@@ -383,6 +441,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.randFreq)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -420,6 +479,10 @@
         private System.Windows.Forms.CheckBox randColors;
         private System.Windows.Forms.ToolStripButton toolStripButton5;
         private System.Windows.Forms.ToolStripMenuItem triangleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem circleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem noneToolStripMenuItem;
+        private System.Windows.Forms.NumericUpDown randFreq;
+        private System.Windows.Forms.Label label2;
     }
 }
 
